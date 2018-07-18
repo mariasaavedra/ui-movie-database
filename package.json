@@ -1,0 +1,45 @@
+{
+  "name": "netflix-project",
+  "version": "1.0.0",
+  "description": "A small exercise for the wonderful Netflix team. ",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "start-dev": "babel-node build/srcServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariasaavedra/netflix-project.git"
+  },
+  "author": "Maria Saavedra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariasaavedra/netflix-project/issues"
+  },
+  "homepage": "https://github.com/mariasaavedra/netflix-project#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "chalk": "^2.4.1",
+    "css-loader": "^1.0.0",
+    "dotenv": "^6.0.0",
+    "es6-promise": "^4.2.4",
+    "express": "^4.16.3",
+    "fetch": "^1.1.0",
+    "file-loader": "^1.1.11",
+    "fs": "0.0.1-security",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "isomorphic-fetch": "^2.2.1",
+    "node-sass": "^4.9.2",
+    "open": "0.0.5",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.0",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.2"
+  },
+  "dependencies": {}
+}
