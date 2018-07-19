@@ -9,21 +9,20 @@
 </head>
 <body>
     <div class="site-wrapper">
-        <div class="loading-overlay"></div>
-        <div class="inner-wrapper">
-            <div class="bg"></div>
+        <div class="bg"></div>
+        <div id="app" class="inner-wrapper">
             <div class="search-wrapper">
-                <input id="search" type="search" placeholder="Search a title.." class="search-input">
-                <i class="material-icons">search</i>
+                <input id="search" class="search-input" role="search" type="search" placeholder="Search a title..">
+                <i aria-label="icon" class="material-icons">search</i>
             </div>
-            <!--./search-wrapper-->
             <div class="movie-wrapper">
-                <div id="movies"></div>
+                <div id="error" class="error-content hidden">
+                    <img src="img/no-results.png" alt="No results">
+                    <p>Sorry, there were no results. Please try a different term.</p>
+                </div>
+                <div id="movies" role="grid" aria-label="search results"></div>
             </div>
-            <!--./movie-wrapper-->
         </div>
-        <!--./inner-wrapper-->
     </div>
-    <!--./site-wrapper-->
 </body>
 </html>

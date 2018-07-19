@@ -1,0 +1,17 @@
+
+.site-wrapper {
+    min-height: 100vh;
+    width: 100vw;
+    background: #FF416C;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FF4B2B, #FF416C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    //background-image: linear-gradient(-20deg, #ddd6f3 0%, #faaca8 100%, #faaca8 100%);
+}
+.inner-wrapper {
+    margin: 0 auto;
+    padding: 30px 60px;
+    @include bp(xs){
+        padding: 1rem;
+        padding-top: 4rem;
+    }
+}
