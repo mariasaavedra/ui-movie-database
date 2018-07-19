@@ -1,9 +1,16 @@
-@keyframes fadeIn { from { opacity:0; opacity: 1\9; /* IE9 only */ } to { opacity:1; } }
+@keyframes fadeIn { 
+    from { 
+        opacity:0; 
+        opacity: 1\9; /* IE9 only */ 
+    } to { 
+        opacity:1; 
+    } 
+}
 
 @keyframes slideIn { 
     from { 
-        opacity:0; opacity: 1\9; /* IE9 only */ 
-        top: -100%;
+            opacity:0; opacity: 1\9; /* IE9 only */ 
+            top: -100%;
     } 
     to { 
         opacity:1; 

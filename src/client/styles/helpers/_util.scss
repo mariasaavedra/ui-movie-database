@@ -1,0 +1,19 @@
+
+.bg {
+    width: 100%;
+    min-height: 100vh;
+    background: url(../img/burst_alt.svg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    animation: .5s ease-out 0s 1 fadeIn;
+}
+
+.hidden {
+    display: none;
+}
