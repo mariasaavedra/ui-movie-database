@@ -1,5 +1,3 @@
-import fetch from "isomorphic-fetch";
-
 (function(){
     'use strict';
    // would move this into a .env file in production. 
