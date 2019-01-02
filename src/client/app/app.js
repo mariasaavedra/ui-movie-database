@@ -3,7 +3,7 @@
    // would move this into a .env file in production. 
     let key = 'aba065d3';
     let q = 'Alien'; // setting up the initial query for the movie Alien, so it searches on page load.
-    let timeout = null;
+    let debounce = null;
 
     const MEDIA_TYPE = {
         "GAME": "game",
@@ -57,7 +57,6 @@
         // these are the data attributes that every movie element is given.
         let index = target.dataset.index;
         let mid = target.dataset.mid;
-
         // add the open class to element that was selected or moused over.
         target.classList.add('open');
         // makes request to get details on that movie/show
@@ -91,7 +90,6 @@
         // listen for when the user makes a search
         let input = document.getElementById('search');
         input.addEventListener('keyup', this.search);
-
         // if there was an error loading movies, display the error message
         if(!movies){
             self.element.querySelector("#error").classList.remove('hidden'); 
@@ -126,9 +124,7 @@
                 </div>`;
                 // insert our movie/show html into the #movies container
                 self.element.querySelector("#movies").insertAdjacentHTML('beforeend', html);
-
                 let movieCells = document.querySelectorAll("#movies > .movie__single");
-
                 // show movie/show details whenever they're clicked or moused over.
                 movieCells.forEach(function(el){
                     el.addEventListener('click', self.showMovie);
