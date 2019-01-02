@@ -1,4 +1,4 @@
-# netflix-project
+# ui-movie-database
 
 ### Install modules
 `npm install`
