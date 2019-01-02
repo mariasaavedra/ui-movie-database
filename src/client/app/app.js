@@ -2,14 +2,14 @@
     'use strict';
    // would move this into a .env file in production. 
     let key = 'aba065d3';
-    // setting up the initial query for the movie Alien, so it searches on page load.
-    let q = 'Alien';
+    let q = 'Alien'; // setting up the initial query for the movie Alien, so it searches on page load.
     let timeout = null;
 
     const MEDIA_TYPE = {
         "GAME": "game",
         "MOVIE": "movie",
-        "TV": "series"
+        "TV": "series",
+        "NONE": "N/A"
     }
 
     let controller = function controller(view, model){
@@ -108,12 +108,11 @@
                     type: movie.Type,
                     poster: movie.Poster
                 }
-                // skip games
                 if(model.type === MEDIA_TYPE.GAME){  
                     return;
                 }
                 // if the poster in unavaible, use this one.
-                if(model.poster === 'N/A'){
+                if(model.poster === MEDIA_TYPE.NONE){
                     model.poster = require('../img/no-poster.png');
                 }
                 // this is the HTML for our movie/show title.
@@ -154,13 +153,11 @@
         el.innerHTML = html;
     }
     
-    
     // our model will be constructed from a request.
     let model = function model(XMLHttpRequest){
         this.XMLHttpRequest = XMLHttpRequest;
     }
 
-    // get results from search
     var oReq = null;
     model.prototype.getMovies = function getMovies(fn){
         let self = this;
@@ -170,8 +167,7 @@
         oReq = new this.XMLHttpRequest();
         oReq.onload = function onLoad(e) {
             self.movies = JSON.parse(e.currentTarget.responseText).Search;
-            // render movies
-            fn(self.movies);
+            fn(self.movies); // render
         };
         oReq.open('GET', 'http://www.omdbapi.com/?apikey=aba065d3&s=' + q, true);
         oReq.send();
@@ -196,8 +192,7 @@
             movie.director = r.Director;
             movie.year = r.Year;
             movie.rating = r.Ratings[0].Value;
-            // render details
-            fn(movie);
+            fn(movie); // render
         };
         oReq.open('GET', 'http://www.omdbapi.com/?apikey=aba065d3&i=' + media.mid, true);
         oReq.send();
