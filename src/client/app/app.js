@@ -89,38 +89,40 @@
             self.element.querySelector("#error").classList.add('hidden'); 
         }
         // this foreach might be better in the model function, converting the response json.
-        movies.forEach(function(movie, index){
-            let model = {
-                index: index,
-                mid: movie.imdbID,
-                title: movie.Title,
-                type: movie.Type,
-                poster: movie.Poster
-            }
-            // skip games
-            if(model.type === 'game'){  
-                return;
-            }
-            // if the poster in unavaible, use this one.
-            if(model.poster === 'N/A'){
-                model.poster = require('../img/no-poster.png');
-            }
-            // this is the HTML for our movie/show title.
-            let html = `<div id="M${model.index}" data-index="${model.index}" data-mid="${model.mid}" class="movie__single">
-                <div class="movie__thumbnail">
-                    <img src="${model.poster}" alt="A movie poster of ${model.title}"> 
-                    <p class="movie__title"> ${model.title} </p>
-                    <p class="movie__type"> ${model.type} </p>
-                    <div id="M${model.index}-details" class="movie__details"></div>
-                </div>
-            </div>`;
-            // insert our movie/show html into the #movies container
-            self.element.querySelector("#movies").insertAdjacentHTML('beforeend', html);
-            // show movie/show details whenever they're clicked or moused over.
-            let el = self.element.querySelector('#M' + model.index);
-            el.addEventListener('click', self.showMovie);
-            el.addEventListener('mouseover', self.showMovie);
-        });
+        if (movies !== undefined){
+            movies.forEach(function(movie, index){
+                let model = {
+                    index: index,
+                    mid: movie.imdbID,
+                    title: movie.Title,
+                    type: movie.Type,
+                    poster: movie.Poster
+                }
+                // skip games
+                if(model.type === 'game'){  
+                    return;
+                }
+                // if the poster in unavaible, use this one.
+                if(model.poster === 'N/A'){
+                    model.poster = require('../img/no-poster.png');
+                }
+                // this is the HTML for our movie/show title.
+                let html = `<div id="M${model.index}" data-index="${model.index}" data-mid="${model.mid}" class="movie__single">
+                    <div class="movie__thumbnail">
+                        <img src="${model.poster}" alt="A movie poster of ${model.title}"> 
+                        <p class="movie__title"> ${model.title} </p>
+                        <p class="movie__type"> ${model.type} </p>
+                        <div id="M${model.index}-details" class="movie__details"></div>
+                    </div>
+                </div>`;
+                // insert our movie/show html into the #movies container
+                self.element.querySelector("#movies").insertAdjacentHTML('beforeend', html);
+                // show movie/show details whenever they're clicked or moused over.
+                let el = self.element.querySelector('#M' + model.index);
+                el.addEventListener('click', self.showMovie);
+                el.addEventListener('mouseover', self.showMovie);
+            });
+        }
     }
         
     view.prototype.showDetails = function showDetails(details){
