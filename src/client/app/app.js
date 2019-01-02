@@ -6,6 +6,12 @@
     let q = 'Alien';
     let timeout = null;
 
+    const MEDIA_TYPE = {
+        "GAME": "game",
+        "MOVIE": "movie",
+        "TV": "series"
+    }
+
     let controller = function controller(view, model){
         this.view = view;
         this.model = model;
@@ -15,6 +21,7 @@
         this.view.onLoadGetMovies = this.onLoadGetMovies.bind(this);
         this.view.search = this.onSearch.bind(this);
         this.view.showMovie = this.onShowMovie.bind(this);
+        this.view.hideMovie = this.onHideMovie.bind(this);
     }
 
     controller.prototype.onLoadGetMovies = function onLoadGetMovies(e){
@@ -25,9 +32,9 @@
     controller.prototype.onSearch = function onSearch(e){
         let self = this;
         let target = e.currentTarget;
-        clearTimeout(timeout);
+        clearTimeout(debounce);
         // set a timeout so user has finished typing before firing a search.
-        timeout = setTimeout(function (){
+        debounce = setTimeout(function (){
             q = target.value;
             self.clearMovies();
             self.onLoadGetMovies();
@@ -50,15 +57,18 @@
         // these are the data attributes that every movie element is given.
         let index = target.dataset.index;
         let mid = target.dataset.mid;
-        // remove the open class from all elements
-        let o = document.querySelectorAll('.open');
-        o.forEach(element => {
-            element.classList.remove('open');
-        });
+
         // add the open class to element that was selected or moused over.
         target.classList.add('open');
         // makes request to get details on that movie/show
         this.model.getMediaDetail({mid: mid, index: index}, this.showMovieDetails.bind(this));
+    }
+
+    controller.prototype.onHideMovie = function onHideMovie(e){
+        let self = this;
+        let target = e.currentTarget;
+        // remove the open class to element that was selected or moused over.
+        target.classList.remove('open');
     }
 
     controller.prototype.showMovieDetails = function xfunc(model){
@@ -99,7 +109,7 @@
                     poster: movie.Poster
                 }
                 // skip games
-                if(model.type === 'game'){  
+                if(model.type === MEDIA_TYPE.GAME){  
                     return;
                 }
                 // if the poster in unavaible, use this one.
@@ -117,10 +127,15 @@
                 </div>`;
                 // insert our movie/show html into the #movies container
                 self.element.querySelector("#movies").insertAdjacentHTML('beforeend', html);
+
+                let movieCells = document.querySelectorAll("#movies > .movie__single");
+
                 // show movie/show details whenever they're clicked or moused over.
-                let el = self.element.querySelector('#M' + model.index);
-                el.addEventListener('click', self.showMovie);
-                el.addEventListener('mouseover', self.showMovie);
+                movieCells.forEach(function(el){
+                    el.addEventListener('click', self.showMovie);
+                    el.addEventListener('mouseenter', self.showMovie);
+                    el.addEventListener('mouseleave', self.hideMovie);
+                });
             });
         }
     }
@@ -146,9 +161,13 @@
     }
 
     // get results from search
+    var oReq = null;
     model.prototype.getMovies = function getMovies(fn){
         let self = this;
-        let oReq = new this.XMLHttpRequest();
+        if (oReq){
+            oReq.abort();
+        }
+        oReq = new this.XMLHttpRequest();
         oReq.onload = function onLoad(e) {
             self.movies = JSON.parse(e.currentTarget.responseText).Search;
             // render movies
@@ -159,9 +178,13 @@
     };
 
     // gets results from search of a paticular movie/show
+    var oReq = null;
     model.prototype.getMediaDetail = function getMediaDetail(media, fn){
         let self = this;
-        let oReq = new this.XMLHttpRequest();
+        if (oReq){
+            oReq.abort();
+        }
+        oReq = new this.XMLHttpRequest();
         if(this.movies[media.index].director != undefined){
             return;
         }
